@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/minya/goutils/web"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/minya/goutils/web"
 )
 
 func SignInWithEmailAndPassword(email string, password string, apiKey string) (VerifyPasswordResponse, error) {
@@ -31,6 +32,9 @@ func SignInWithEmailAndPassword(email string, password string, apiKey string) (V
 
 	req.Header.Add("Content-Type", "application/json; charset=UTF-8")
 	response, err := client.Do(req)
+	if err != nil {
+		return responseStruct, err
+	}
 
 	responseBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
